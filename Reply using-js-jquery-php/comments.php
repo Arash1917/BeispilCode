@@ -1,5 +1,4 @@
 <?php
-// Update the details below with your MySQL details
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';
@@ -7,10 +6,10 @@ $DATABASE_NAME = 'phpcomments';
 try {
     $pdo = new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
 } catch (PDOException $exception) {
-    // If there is an error with the connection, stop the script and display the error
+    
     exit('Failed to connect to database!');
 }
-// Below function will convert datetime to time elapsed string
+
 function time_elapsed_string($datetime, $full = false) {
     $now = new DateTime;
     $ago = new DateTime($datetime);
@@ -28,17 +27,17 @@ function time_elapsed_string($datetime, $full = false) {
     if (!$full) $string = array_slice($string, 0, 1);
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
-//  This function will populate the comments and comments replies using a loop
+
 function show_comments($comments, $parent_id = -1) {
     $html = '';
     if ($parent_id != -1) {
-        // If the comments are replies sort them by the "submit_date" column
+        
         array_multisort(array_column($comments, 'submit_date'), SORT_ASC, $comments);
     }
-    // Iterate the comments using the foreach loop
+   
     foreach ($comments as $comment) {
         if ($comment['parent_id'] == $parent_id) {
-            // Add the comment to the $html variable
+            
             $html .= '
             <div class="comment">
                 <div>
@@ -70,16 +69,16 @@ function show_write_comment_form($parent_id = -1) {
     ';
     return $html;
 }
-// Page ID needs to exist, this is used to determine which comments are for which page
+
 if (isset($_GET['page_id'])) {
     // Check if the submitted form variables exist
     if (isset($_POST['name'], $_POST['content'])) {
-        // POST variables exist, insert a new comment into the MySQL comments table (user submitted form)
+        
         $stmt = $pdo->prepare('INSERT INTO comments (page_id, parent_id, name, content, submit_date) VALUES (?,?,?,?,NOW())');
         $stmt->execute([ $_GET['page_id'], $_POST['parent_id'], $_POST['name'], $_POST['content'] ]);
         exit('Your comment has been submitted!');
     }
-    // Get all comments by the Page ID ordered by the submit date
+    
     $stmt = $pdo->prepare('SELECT * FROM comments WHERE page_id = ? ORDER BY submit_date DESC');
     $stmt->execute([ $_GET['page_id'] ]);
     $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
