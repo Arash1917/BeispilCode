@@ -1,0 +1,30 @@
+# marahel aval kar vagti mikhahim barname benevisim.
+
+# 1-import modules
+# 2-class
+# 3-oibject-show
+
+----------------------------------------------------
+#import sys
+#from PyQt5.QtWidget import QApplication, QWidget
+
+nokte: in do khate bala hamishe bray sakht software bekar miravand.
+
+#class    f(Qwidget):
+	#def __init__(self):
+	  #super().__init__()
+	  #salf.setUI(()
+	  
+	#def  setUI(self)
+	  #self.Geomertry(10,10,300,300)
+	  #self.setWindowTitle(arash)
+	  #salf.show()
+	  
+
+#if  __name__=="__main__":
+   #print(__name__)
+   #app = QApplicaton(sys.argv)
+   #ex = F()
+   #sys.exit(app.exec_())
+   
+	  
